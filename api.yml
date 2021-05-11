@@ -1,0 +1,165 @@
+openapi: 3.0.0
+info:
+  title: Airports API
+  description: Just  airports
+  version: '1'
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/multiexample/Airports/1
+  - url: http://localhost:3000
+paths:
+  /airports/{airportIcao}:
+    get:
+      summary: Returns an airport with specified id
+      parameters:
+        - in: path
+          name: airportIcao
+          schema:
+            type: string
+          required: true
+          description: Alphanumeric ID of the airport
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Airport'
+        429:
+          description: Too many requests. Please follow the exponential backoff pattern.
+    put:
+      summary: Updates the details of an airport
+      parameters:
+        - in: path
+          name: airportIcao
+          schema:
+            type: string
+          required: true
+          description: Alphanumeric ID of the airport
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Airport'
+      requestBody:
+        description: format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Airport'
+    post:
+      summary: Add a new airport
+      parameters:
+        - in: path
+          name: airportIcao
+          schema:
+            type: string
+          required: true
+          description: Alphanumeric ID of the airport
+      responses:
+        200:
+          description: OK
+        429:
+          description: Too many requests. Please follow the exponential backoff pattern.
+      requestBody:
+        description: format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Airport'
+    delete:
+      summary: Delete an airport
+      parameters:
+        - in: path
+          name: airportIcao
+          schema:
+            type: string
+          required: true
+          description: Alphanumeric ID of the airport
+      responses:
+        200:
+          description: Succesfully deleted
+        429:
+          description: Too many requests. Please follow the exponential backoff pattern.
+  /airports:
+    get:
+      summary: Returns a list of all the airports
+      responses:
+        200:
+          description: an array of JSON objects that represent each airport
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Airport'
+        429:
+          description: Too many requests. Please follow the exponential backoff pattern.
+    post:
+      summary: Add a new airport
+      responses:
+        200:
+          description: OK
+        429:
+          description: Too many requests. Please follow the exponential backoff pattern.
+      requestBody:
+        description: format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Airport'
+    delete:
+      summary: Delete all airports
+      responses:
+        200:
+          description: Succesfully deleted all airports
+        429:
+          description: Too many requests. Please follow the exponential backoff pattern.
+components:
+  schemas:
+    Airport:
+      type: object
+      properties:
+        icao:
+          type: string
+        iata:
+          type: string
+        name:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        elevation:
+          type: integer
+        lat:
+          type: number
+          format: double
+        lon:
+          type: number
+          format: double
+        tz:
+          type: string
+      example:
+        icao: "00AK"
+        iata: ""
+        name: "Lowell Field"
+        city: "Anchor Point"
+        state: "Alaska"
+        country: "US"
+        elevation: 450
+        lat: 59.94919968
+        lon: -151.695999146
+        tz: "America/Anchorage"
